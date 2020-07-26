@@ -1,0 +1,14 @@
+name: MenuItem
+version: ${project.version}
+main: dev.sabel.i.menuitem.MenuItem
+api-version: 1.13
+load: STARTUP
+commands:
+  menuitemreload:
+    description: Reload the MenuItem configuration.
+    permission: menuitem.reload
+    permission-message: You cannot run this command!
+permissions:
+  menuitem.reload:
+    description: Allows /menuitemreload
+    default: op

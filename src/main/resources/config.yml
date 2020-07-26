@@ -1,0 +1,12 @@
+ItemMaterial: NETHER_STAR
+ItemName: "&aMenu"
+ItemGlowing: true
+ItemLore:
+  - "&cYou can configure this lore text in the config.yml!"
+  - "&cIf you aren't an admin then you shouldn't be seeing this lol"
+
+# Preceding / not required.
+ItemAction: "help"
+
+# If you're using a server resource pack and you want a custom model.
+ItemCustomModelData: 0
