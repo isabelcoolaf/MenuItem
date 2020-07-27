@@ -84,7 +84,11 @@ public final class MenuItem extends JavaPlugin {
         menuMeta.setUnbreakable(true);
         menuMeta.addItemFlags(ItemFlag.HIDE_ENCHANTS, ItemFlag.HIDE_UNBREAKABLE);
         if (itemLore.size() != 0) menuMeta.setLore(itemLore);
-        if (customModelInt != 0) menuMeta.setCustomModelData(customModelInt);
+        try {
+            if (customModelInt != 0) menuMeta.setCustomModelData(customModelInt);
+        } catch (NoSuchMethodError ignored) {
+            getLogger().warning("This version of MC does not support custom model data! Ignored your config input.");
+        }
 
         itemInstance.setItemMeta(menuMeta);
         if (itemGlowing) itemInstance.addUnsafeEnchantment(Enchantment.DURABILITY, 1);

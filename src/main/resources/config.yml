@@ -9,4 +9,5 @@ ItemLore:
 ItemAction: "help"
 
 # If you're using a server resource pack and you want a custom model.
+# 1.14+ ONLY!
 ItemCustomModelData: 0

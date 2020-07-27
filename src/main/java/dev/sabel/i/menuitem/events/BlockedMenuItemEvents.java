@@ -3,7 +3,6 @@ package dev.sabel.i.menuitem.events;
 import dev.sabel.i.menuitem.MenuItem;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
-import org.bukkit.Tag;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.PlayerDeathEvent;
@@ -14,25 +13,46 @@ import org.bukkit.event.player.PlayerSwapHandItemsEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 
+import java.util.ArrayList;
+
 public class BlockedMenuItemEvents implements Listener {
 
     private final MenuItem plugin;
 
     public BlockedMenuItemEvents(MenuItem p) {
         plugin = p;
+        ArrayList<Material> arrows = new ArrayList<>();
+        arrows.add(Material.ARROW);
+        arrows.add(Material.SPECTRAL_ARROW);
+        arrows.add(Material.TIPPED_ARROW);
         Bukkit.getScheduler().scheduleSyncRepeatingTask(plugin, () ->
             Bukkit.getOnlinePlayers().forEach(x -> {
-            PlayerInventory inv = x.getInventory();
-            if (inv.getItemInMainHand().getType().equals(Material.BOW)
-                    || inv.getItemInMainHand().getType().equals(Material.CROSSBOW)
-                    || inv.getItemInOffHand().getType().equals(Material.BOW)
-                    || inv.getItemInOffHand().getType().equals(Material.CROSSBOW)) {
-                if (!Tag.ITEMS_ARROWS.getValues().contains(p.itemInstance.getType())) return;
-                inv.setItem(8, p.blockedItem);
-                return;
-            }
-            if (inv.getItem(8) == null || !inv.getItem(8).equals(p.itemInstance)) inv.setItem(8, p.itemInstance);
-        }), 0, 0);
+                PlayerInventory inv = x.getInventory();
+                if (inv.getItem(8) == null || !(inv.getItem(8).equals(p.itemInstance) || inv.getItem(8).equals(p.blockedItem))) inv.setItem(8, p.itemInstance);
+                if (!arrows.contains(p.itemInstance.getType()) && !p.itemInstance.getType().equals(Material.FIREWORK_ROCKET)) return;
+                if (inv.getItemInMainHand().getType().equals(Material.BOW)
+                   || inv.getItemInOffHand().getType().equals(Material.BOW)) {
+                    if (arrows.contains(p.itemInstance.getType())) {
+                       if (!inv.getItem(8).equals(p.blockedItem)) inv.setItem(8, p.blockedItem);
+                       return;
+                    }
+                }
+                try {
+                    if (inv.getItemInMainHand().getType().equals(Material.CROSSBOW)
+                        || inv.getItemInOffHand().getType().equals(Material.CROSSBOW)) {
+                        if (!arrows.contains(p.itemInstance.getType()) && !p.itemInstance.getType().equals(Material.FIREWORK_ROCKET)) return;
+                        if (inv.getItemInOffHand().getType().equals(Material.CROSSBOW) && (inv.getItemInMainHand().equals(p.itemInstance) || inv.getItemInMainHand().equals(p.blockedItem))) {
+                            if (!inv.getItem(8).equals(p.blockedItem)) inv.setItem(8, p.blockedItem);
+                            return;
+                        }
+                        if (arrows.contains(p.itemInstance.getType())) {
+                            if (!inv.getItem(8).equals(p.blockedItem)) inv.setItem(8, p.blockedItem);
+                            return;
+                        }
+                    }
+                } catch (NoSuchFieldError ignored) {}
+                if (!inv.getItem(8).equals(p.itemInstance)) inv.setItem(8, p.itemInstance);
+            }), 0, 0);
     }
 
     private boolean testItem(ItemStack i) {
