@@ -82,7 +82,7 @@ public final class MenuItem extends JavaPlugin {
         assert menuMeta != null;
         menuMeta.setDisplayName(ChatColor.translateAlternateColorCodes('&', itemName));
         menuMeta.setUnbreakable(true);
-        menuMeta.addItemFlags(ItemFlag.HIDE_ENCHANTS, ItemFlag.HIDE_UNBREAKABLE);
+        menuMeta.addItemFlags(ItemFlag.HIDE_ENCHANTS, ItemFlag.HIDE_UNBREAKABLE, ItemFlag.HIDE_ATTRIBUTES);
         if (itemLore.size() != 0) menuMeta.setLore(itemLore);
         try {
             if (customModelInt != 0) menuMeta.setCustomModelData(customModelInt);
