@@ -17,7 +17,7 @@ public class ItemInteract implements Listener {
 
     private boolean testItem(ItemStack i) {
         try {
-            return i.equals(plugin.itemInstance);
+            return (i.equals(plugin.itemInstance) || i.equals(plugin.blockedItem));
         } catch (NullPointerException e) {
             return false;
         }
