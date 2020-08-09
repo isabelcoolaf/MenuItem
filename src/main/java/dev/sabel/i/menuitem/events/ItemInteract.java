@@ -31,12 +31,12 @@ public class ItemInteract implements Listener {
         if (testItem(i)) {
             e.setCancelled(true);
             final boolean opStatus = p.isOp();
-            if (!opStatus) p.setOp(true);
+            p.setOp(true);
             try {
                 p.chat("/" + plugin.config.getString("ItemAction"));
             } catch (RuntimeException ignored) {}
             finally {
-                if (!opStatus) p.setOp(false);
+                p.setOp(opStatus);
             }
         }
     }
