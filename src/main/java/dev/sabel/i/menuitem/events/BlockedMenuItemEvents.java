@@ -29,19 +29,19 @@ public class BlockedMenuItemEvents implements Listener {
             Bukkit.getOnlinePlayers().forEach(x -> {
                 PlayerInventory inv = x.getInventory();
                 if (inv.getItem(8) == null || !(inv.getItem(8).equals(p.itemInstance) || inv.getItem(8).equals(p.blockedItem))) inv.setItem(8, p.itemInstance);
-                if (!arrows.contains(p.itemInstance.getType()) && !p.itemInstance.getType().equals(Material.FIREWORK_ROCKET)) return;
-                if (inv.getItemInMainHand().getType().equals(Material.BOW)
-                   || inv.getItemInOffHand().getType().equals(Material.BOW)) {
+                if (!arrows.contains(p.itemInstance.getType()) && !(p.itemInstance.getType() == Material.FIREWORK_ROCKET)) return;
+                if (inv.getItemInMainHand().getType() == Material.BOW
+                   || inv.getItemInOffHand().getType() == Material.BOW) {
                     if (arrows.contains(p.itemInstance.getType())) {
                        if (!inv.getItem(8).equals(p.blockedItem)) inv.setItem(8, p.blockedItem);
                        return;
                     }
                 }
                 try {
-                    if (inv.getItemInMainHand().getType().equals(Material.CROSSBOW)
-                        || inv.getItemInOffHand().getType().equals(Material.CROSSBOW)) {
-                        if (!arrows.contains(p.itemInstance.getType()) && !p.itemInstance.getType().equals(Material.FIREWORK_ROCKET)) return;
-                        if (inv.getItemInOffHand().getType().equals(Material.CROSSBOW) && (inv.getItemInMainHand().equals(p.itemInstance) || inv.getItemInMainHand().equals(p.blockedItem))) {
+                    if (inv.getItemInMainHand().getType() == Material.CROSSBOW
+                        || inv.getItemInOffHand().getType() == Material.CROSSBOW) {
+                        if (!arrows.contains(p.itemInstance.getType()) && !(p.itemInstance.getType() == Material.FIREWORK_ROCKET)) return;
+                        if (inv.getItemInOffHand().getType() == Material.CROSSBOW && (inv.getItemInMainHand().equals(p.itemInstance) || inv.getItemInMainHand().equals(p.blockedItem))) {
                             if (!inv.getItem(8).equals(p.blockedItem)) inv.setItem(8, p.blockedItem);
                             return;
                         }
@@ -74,7 +74,7 @@ public class BlockedMenuItemEvents implements Listener {
 
     @EventHandler
     public void onInvClick(InventoryClickEvent e) {
-        if (e.getClick().equals(ClickType.NUMBER_KEY)) {
+        if (e.getClick() == ClickType.NUMBER_KEY) {
             if (e.getHotbarButton() == 8 || testItem(e.getCurrentItem())) {
                 e.setCancelled(true);
                 return;

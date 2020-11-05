@@ -4,6 +4,7 @@ import dev.sabel.i.menuitem.MenuItem;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerArmorStandManipulateEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.EquipmentSlot;
@@ -27,7 +28,7 @@ public class ItemInteract implements Listener {
     public void interactEvent(PlayerInteractEvent e) {
         Player p = e.getPlayer();
         ItemStack i = e.getItem();
-        if (e.getHand() == null || e.getHand().equals(EquipmentSlot.OFF_HAND)) return;
+        if (e.getHand() == null || e.getHand() == EquipmentSlot.OFF_HAND || e.getAction() == Action.LEFT_CLICK_AIR) return;
         if (testItem(i)) {
             e.setCancelled(true);
             final boolean opStatus = p.isOp();
